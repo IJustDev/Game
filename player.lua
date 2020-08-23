@@ -1,39 +1,48 @@
 player = {}
 local speed = 5
 
-function player:init(map)
+function player:init(networking)
+    self.networking = networking
+
     player.character_sprite = getSprite(sprites.character, 0, 0, 64, 96)
     self.x = 0
     self.y = 0
-    self.xp = 0
     self.shoot_cooldown = 0
     self.dir = "w"
-    self.isWalking = false
-    self.map = map
     self:getAnimation()
     self.items = {}
     table.insert(self.items, item_staff)
     table.insert(self.items, item_pickaxe)
 end
 
-function player:update()
+function player:initItems()
+    self.items = {}
+    table.insert(self.items, item_staff)
+    table.insert(self.items, item_pickaxe)
+end
+
+local movementTimer = 0
+function player:update(dt)
+    local lastX, lastY = self.x, self.y
     if love.keyboard.isDown("w") then
         self.direction = "w"
         self.y = player.y - speed
-    end
-    if love.keyboard.isDown("s") then
+    elseif love.keyboard.isDown("s") then
         self.direction = "s"
         self.y = self.y + speed
-    end
-    if love.keyboard.isDown("a") then
+    elseif love.keyboard.isDown("a") then
         self.direction = "a"
         self.x = self.x - speed
-    end
-    if love.keyboard.isDown("d") then
+    elseif love.keyboard.isDown("d") then
         self.direction = "d"
         self.x = self.x + speed
     end
     self:getAnimation(self.direction)
+    movementTimer = movementTimer + dt
+    if movementTimer > 2 then
+        self.networking:updatePosition(self.x, self.y)
+        movementTimer = movementTimer - 2
+    end
     if self.shoot_cooldown >= 1 then
         self.shoot_cooldown = self.shoot_cooldown - 1
     end
@@ -79,7 +88,7 @@ function player:shoot()
     if self.shoot_cooldown == 0 then
         local bullet = newProjectile(self.x, self.y, self.direction)
         table.insert(projectiles, bullet)
-        self.shoot_cooldown = 25
+        self.shoot_cooldown = 15
     end
 end
 
