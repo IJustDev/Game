@@ -5,7 +5,7 @@ zip_client:
     stage: build
     image: debian
     script:
-        - sh build.zip
+        - sh build.sh
     artifacts:
         name: client
         paths:
