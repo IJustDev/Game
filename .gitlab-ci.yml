@@ -5,7 +5,6 @@ zip_client:
     stage: build
     image: debian
     script:
-        - apt install zip unzip wget
         - sh build.zip
     artifacts:
         name: client
