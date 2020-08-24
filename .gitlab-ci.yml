@@ -1,0 +1,14 @@
+stages:
+    - build
+
+zip_client:
+    stage: build
+    image: debian
+    script:
+        - apt install zip unzip wget
+        - sh build.zip
+    artifacts:
+        name: client
+        paths:
+            - client.zip
+        expire_in: 4 days

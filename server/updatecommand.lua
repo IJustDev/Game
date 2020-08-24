@@ -9,5 +9,5 @@ function updatecommand:handle()
     for i=1, table.getn(players) do
         table.insert(messages, self:serializePlayer(players[i]))
     end
-    return table.concat(messages, '\n')
+    return messages
 end

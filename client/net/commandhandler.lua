@@ -1,31 +1,21 @@
 commandhandler = {}
 
-function commandhandler:insertPlayerIfNotExistant(entity)
-    if indexOfPlayer(entity) == -1 then
-        local player = {}
-        player.entity = entity
-        player.x = x
-        player.y = y
-        table.insert(all_players, player)
-    end
-end
-
 function commandhandler:updatePlayer(entity, x, y)
-    local index = indexOfPlayer(entity)
-    if index == -1 then
-        self:insertPlayerIfNotExistant(entity)
-        self:updatePlayer(entity, x, y)
-        return
+    if networkplayer:getByEntity(entity) == nil then
+        networkplayer:init(entity, "U-"..entity)
     end
-    all_players[index].x = x
-    all_players[index].y = y
+
+    local target = networkplayer:getByEntity(entity)
+    target:updateCoordinates(x, y)
+    print(target.entity..";X:"..target.x.."Y:"..target.y)
 end
 
 function commandhandler:handle(cmd, params)
-    for i = 1, table.getn(params) do
-    end
     if cmd == "M" then
-        self:updatePlayer(params[1], params[2], params[3])
+        if params[1] ~= entityId then
+            print(table.concat(params, ":"))
+            self:updatePlayer(params[1], params[2], params[3])
+        end
     elseif cmd == "HIT" then
     elseif cmd == "ITEM" then
     end

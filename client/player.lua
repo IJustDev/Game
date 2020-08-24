@@ -16,9 +16,9 @@ function player:init(entity, world)
     o.isDead = false
     o.entity = entity
     o.money = 1000
-    self:addItem(item_staff)
-    self:addItem(item_pickaxe)
-    self:addItem(item_arrow)
+    -- self:addItem(item_staff)
+    -- self:addItem(item_pickaxe)
+    -- self:addItem(item_arrow)
     setmetatable(o, self)
     self.__index = self
     table.insert(all_players, o)
@@ -84,7 +84,6 @@ end
 
 function player:hit()
     local nearby = self:getNearbyPlayers(3)
-    print(nearby)
     for i=1, table.getn(nearby) do
         local nearbyPlayer = nearby[i]
         if nearbyPlayer ~= self then

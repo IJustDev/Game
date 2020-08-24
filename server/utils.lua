@@ -12,7 +12,7 @@ end
 function indexOfPlayer(entity)
     for i=1,table.getn(players) do
         if players[i].entity == entity then
-            return 1
+            return i
         end
     end
     return -1

@@ -1,10 +1,7 @@
 localplayer = player:init()
 
-function localplayer:init(networking, world, entity)
-    self.entity = entity
-    self.networking = networking
-    self.world = world
-    self.skin = 1
+function localplayer:init(net, entity, world)
+    self.net = net
     self.speed = 5
     return self
 end
@@ -31,7 +28,11 @@ function localplayer:update(dt)
     self:getAnimation(self.direction)
     movementTimer = movementTimer + dt
     if movementTimer > 2 then
-        self.networking:updatePosition(self.x, self.y)
+        print("---")
+        print(self.x)
+        print(self.y)
+        print("---")
+        self.net:updatePosition(self.x, self.y)
         movementTimer = movementTimer - 2
     end
     if self.shoot_cooldown >= 1 then
@@ -51,7 +52,7 @@ function localplayer:keypressed(key, scancode, isrepeat)
         self:dig()
     end
     if key == "j" then
-        self:hit()
+        -- self:hit()
     end
 end
 
