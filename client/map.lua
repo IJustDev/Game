@@ -10,7 +10,10 @@ function map:draw()
     local tileMap = self.world:getTileMap()
     for i=0,150 do
         for j=0,150 do
-            renderBlock(tileMap[i][j], i*32, j*32)
+            local b = tileMap[i][j]
+            if b ~= nil then
+                love.graphics.draw(sprites.floor, b:getSprite(), i*32, j*32)
+            end
         end
     end
 end

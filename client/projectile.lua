@@ -1,27 +1,31 @@
-local speed = 10 
+projectile = {}
+local speed = 15
 
-function newProjectile(startX, startY, direction)
-    projectile = {}
-    projectile.startX = startX
-    projectile.startY = startY
-    projectile.x = startX
-    projectile.y = startY
-    projectile.direction = direction
-    return projectile 
+function projectile:init(startX, startY, direction)
+    o = {}
+    o.startX = startX
+    o.startY = startY
+    o.x = startX
+    o.y = startY
+    o.direction = direction
+    return o
 end
 
-function updateProjectile(projectile)
-    if projectile.direction == "w" then
-        projectile.y = projectile.y - speed
-    elseif projectile.direction == "s" then
-        projectile.y = projectile.y + speed
-    elseif projectile.direction == "d" then
-        projectile.x = projectile.x + speed
-    elseif projectile.direction == "a" then
-        projectile.x = projectile.x - speed
+function projectile:update()
+    if self.direction == "w" then
+        self.y = self.y - speed
+    elseif self.direction == "s" then
+        self.y = self.y + speed
+    elseif self.direction == "d" then
+        self.x = self.x + speed
+    elseif self.direction == "a" then
+        self.x = self.x - speed
     end
 end
 
-function drawProjectile(projectile)
-    love.graphics.rectangle("fill", projectile.x, projectile.y, 8, 8)
+function projectile:collide()
+end
+
+function projectile:draw()
+    love.graphics.rectangle("fill", self.x, self.y, 8, 8)
 end

@@ -7,12 +7,12 @@ end
 
 function entitymanager:draw()
     for i=1,table.getn(projectiles) do
-        drawProjectile(projectiles[i])
+        projectile.draw(projectiles[i])
     end
 end
 
 function entitymanager:update()
     for i=1,table.getn(projectiles) do
-        updateProjectile(projectiles[i])
+        projectile.update(projectiles[i])
     end
 end

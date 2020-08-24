@@ -54,10 +54,10 @@ function networking:update(dt)
 end
 
 function networking:draw()
-    for i=1, table.getn(all_players) do
-        local networkPlayer = all_players[i]
-        love.graphics.rectangle("fill", all_players[i].x, all_players[i].y, 50, 92)
-    end
+    -- for i=1, table.getn(all_players) do
+    --     local networkPlayer = all_players[i]
+    --     love.graphics.rectangle("fill", all_players[i].x, all_players[i].y, 50, 92)
+    -- end
 end
 
 function networking:getUDPSocket()

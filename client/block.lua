@@ -1,17 +1,36 @@
+block = {}
+
 local width = 32
 local height = 32
 
-function newBlock(xPos, yPos)
-    block = {}
-    block.sprite = getSprite(sprites.floor, xPos*width, yPos*height, width, height)
-    return block
+function block:new(solid, spriteX, spriteY, hardness, item)
+    o = {}
+    o.solid = solid
+    o.item = item
+    o.hardness = hardness
+    o.sprite = getSprite(sprites.floor, spriteX*width, spriteY*height, width, height)
+    setmetatable(o, self)
+    self.__index = self
+    return o
 end
 
-function renderBlock(block, xPos, yPos)
-    love.graphics.draw(sprites.floor, block.sprite, xPos, yPos)
+function block:isSolid()
+    return self.solid
 end
 
-stone_one = newBlock(0, 0)
-grass_one = newBlock(0, 2)
-redstone_one = newBlock(2, 4)
-water = newBlock(3, 5)
+function block:getSprite()
+    return self.sprite
+end
+
+function block:destroy()
+    self.sprite = water:getSprite()
+end
+
+function block:getItem()
+    return self.item
+end
+
+function block:getHardness()
+    return self.harndess
+end
+
