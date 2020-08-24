@@ -6,7 +6,7 @@ zip_client:
     image: debian
     script:
         - apt update
-        - apt install wget zip unzip
+        - apt install -y wget zip unzip
         - sh build.sh
     artifacts:
         name: client
