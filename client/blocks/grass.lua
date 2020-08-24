@@ -2,7 +2,7 @@ block_grass = {}
 item_grass = {}
 
 function item_grass:new()
-    return item:new(4, 7)
+    return item:new("grass", 4, 7)
 end
 
 function block_grass:new()

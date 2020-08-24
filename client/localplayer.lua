@@ -1,6 +1,7 @@
 localplayer = player:init()
 
-function localplayer:init(networking, world)
+function localplayer:init(networking, world, entity)
+    self.entity = entity
     self.networking = networking
     self.world = world
     self.skin = 1
@@ -10,6 +11,9 @@ end
 
 local movementTimer = 0
 function localplayer:update(dt)
+    if self.isDead then
+        goto continue
+    end
     local lastX, lastY = self.x, self.y
     if love.keyboard.isDown("w") then
         self.direction = "w"
@@ -33,6 +37,7 @@ function localplayer:update(dt)
     if self.shoot_cooldown >= 1 then
         self.shoot_cooldown = self.shoot_cooldown - 1
     end
+    ::continue::
 end
 
 function localplayer:keypressed(key, scancode, isrepeat)

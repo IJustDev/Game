@@ -4,15 +4,13 @@ require "net/commandhandler"
 networking = {}
 
 -- Networking class
-function networking:establish()
+function networking:establish(entity)
     self.udp = socket.udp()
     self.udp:settimeout(0)
     self.udp:setpeername("localhost", 42069)
 
-    math.randomseed(os.time())
-    self.entity = tostring(math.random(99999))
+    self.entity = entity
 
-    self.commandqueue = {}
     return self
 end
 
@@ -62,8 +60,4 @@ end
 
 function networking:getUDPSocket()
     return self.udp
-end
-
-function networking:getCommandQueue()
-    return self.queue
 end

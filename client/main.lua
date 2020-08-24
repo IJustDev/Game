@@ -21,10 +21,11 @@ enemies = {}
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
     local initializedWorld = world:generate({})
+    local entity = tostring(math.random(9999))
     networking:establish()
     map:init(initializedWorld)
 
-    nwPlayer = networkplayer:init(2003, "Asdf")
+    nwPlayer = networkplayer:init(2301230, "Asdf")
     gamePlayer = localplayer:init(networking, initializedWorld)
     hud:init(gamePlayer)
 end
@@ -40,6 +41,7 @@ function love.draw()
     gamePlayer:draw()
     nwPlayer:draw()
     hud:draw()
+    projectile:drawAll()
     -- love.graphics.pop()
 end
 
@@ -49,6 +51,7 @@ function love.update(dt)
     entitymanager:update()
     hud:update(gamePlayer)
     networking:update(dt)
+    projectile:updateAll()
 end
 
 function love.keypressed(key, scancode, isrepeat)

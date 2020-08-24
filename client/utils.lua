@@ -32,3 +32,11 @@ function indexOfPlayer(entity)
     return -1
 end
 
+
+function indexOf(t, query)
+    local index={}
+    for k,v in pairs(t) do
+        index[v]=k
+    end
+    return index[query]
+end
