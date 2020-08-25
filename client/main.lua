@@ -34,7 +34,6 @@ end
 function love.draw()
     map:draw()
 
-    networking:draw()
     entitymanager:draw()
 
     networkplayer:drawAll()

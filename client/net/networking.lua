@@ -31,14 +31,6 @@ function networking:sendMessage(message)
     self.udp:send(dg)
 end
 
-function networking:login()
-    self:sendMessage("L")
-end
-
-function networking:logout()
-    self:sendMessage("Q")
-end
-
 function networking:updatePosition(x, y)
     self:sendMessage(string.format("M %d %d", x, y))
 end
@@ -46,13 +38,6 @@ end
 local fetchTimer = 0
 function networking:update(dt)
     self:handle()
-end
-
-function networking:draw()
-    -- for i=1, table.getn(all_players) do
-    --     local networkPlayer = all_players[i]
-    --     love.graphics.rectangle("fill", all_players[i].x, all_players[i].y, 50, 92)
-    -- end
 end
 
 function networking:getUDPSocket()
