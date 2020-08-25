@@ -9,9 +9,6 @@ function networkplayer:init(entity, username)
     return self
 end
 
-function networkplayer:update()
-end
-
 function networkplayer:draw()
     player.draw(self)
     if not self.isDead then
@@ -35,10 +32,10 @@ function networkplayer.drawAll()
     end
 end
 
-function networkplayer:updateAll()
+function networkplayer:updateAll(dt)
     for i=1,table.getn(network_players) do
         local nwPlayer = network_players[i]
-        -- nwPlayer:update()
+        nwPlayer:update(dt)
     end
 end
 

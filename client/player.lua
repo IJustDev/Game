@@ -5,6 +5,8 @@ player = {}
 function player:init(entity, world)
     o = {}
     player.character_sprite = getSprite(sprites.images.character, 0, 0, 64, 96)
+    self.grid = anim8.newGrid(75, 103, sprites.images.character:getWidth(), sprites.images.character:getHeight())
+    self.animation = anim8.newAnimation(self.grid('1-3', 1), 0.2)
     o.x = 0
     o.y = 0
     o.world = world
@@ -26,30 +28,17 @@ function player:addItem(item)
     table.insert(self.items, item)
 end
 
-function player:getAnimation(direction)
-    -- 50x92
-    -- Distance between sprites 30
-    if self.direction == "w" then
-        self.character_sprite = love.graphics.newQuad(0, 325, 50, 92, sprites.images.character:getDimensions())
-    end
-    if self.direction == "s" then
-        self.character_sprite = love.graphics.newQuad(100+60, 0, 50, 92, sprites.images.character:getDimensions())
-    end
-    if self.direction == "a" then
-        self.character_sprite = love.graphics.newQuad(0, 120, 50, 92, sprites.images.character:getDimensions())
-    end
-    if self.direction == "d" then
-        self.character_sprite = love.graphics.newQuad(0, 225, 50, 92, sprites.images.character:getDimensions())
-    end
-end
-
 function player:draw()
-    love.graphics.draw(sprites.images.character, self.character_sprite, self.x, self.y)
+    self.animation:draw(sprites.images.character, self.x, self.y)
     if self.isDead then
         love.graphics.print("RIP", self.x + 15, self.y - 15)
     else
         love.graphics.rectangle("fill", self.x, self.y, self.health, 5)
     end
+end
+
+function player:update(dt)
+    self.animation:update(dt)
 end
 
 function player:hasItemInInventory(id)

@@ -1,4 +1,5 @@
 all_players = {}
+anim8 = require "anim8"
 require "utils"
 require "net/networking"
 require "spritesheets"
@@ -52,6 +53,7 @@ function love.update(dt)
     hud:update(gamePlayer)
     networking:update(dt)
     projectile:updateAll()
+    networkplayer:updateAll(dt)
 end
 
 function love.keypressed(key, scancode, isrepeat)
