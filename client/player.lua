@@ -4,7 +4,7 @@ player = {}
 
 function player:init(entity, world)
     o = {}
-    player.character_sprite = getSprite(sprites.character, 0, 0, 64, 96)
+    player.character_sprite = getSprite(sprites.images.character, 0, 0, 64, 96)
     o.x = 0
     o.y = 0
     o.world = world
@@ -23,28 +23,28 @@ function player:init(entity, world)
 end
 
 function player:addItem(item)
-    table.insert(o.items, item)
+    table.insert(self.items, item)
 end
 
 function player:getAnimation(direction)
     -- 50x92
     -- Distance between sprites 30
     if self.direction == "w" then
-        self.character_sprite = love.graphics.newQuad(0, 325, 50, 92, sprites.character:getDimensions())
+        self.character_sprite = love.graphics.newQuad(0, 325, 50, 92, sprites.images.character:getDimensions())
     end
     if self.direction == "s" then
-        self.character_sprite = love.graphics.newQuad(100+60, 0, 50, 92, sprites.character:getDimensions())
+        self.character_sprite = love.graphics.newQuad(100+60, 0, 50, 92, sprites.images.character:getDimensions())
     end
     if self.direction == "a" then
-        self.character_sprite = love.graphics.newQuad(0, 120, 50, 92, sprites.character:getDimensions())
+        self.character_sprite = love.graphics.newQuad(0, 120, 50, 92, sprites.images.character:getDimensions())
     end
     if self.direction == "d" then
-        self.character_sprite = love.graphics.newQuad(0, 225, 50, 92, sprites.character:getDimensions())
+        self.character_sprite = love.graphics.newQuad(0, 225, 50, 92, sprites.images.character:getDimensions())
     end
 end
 
 function player:draw()
-    love.graphics.draw(sprites.character, self.character_sprite, self.x, self.y)
+    love.graphics.draw(sprites.images.character, self.character_sprite, self.x, self.y)
     if self.isDead then
         love.graphics.print("RIP", self.x + 15, self.y - 15)
     else
@@ -76,7 +76,11 @@ function player:getItems()
 end
 
 function player:dig()
-    self.world:destroyBlockAt(self.x, self.y)
+    -- self.world:destroyBlockAt(self.x, self.y)
+
+end
+
+function player:interact()
 end
 
 function player:hit()

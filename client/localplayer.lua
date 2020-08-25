@@ -33,6 +33,12 @@ function localplayer:update(dt)
         self.x = self.x + self.speed
         self.net:updatePosition(self.x, self.y)
     end
+    if love.keyboard.isDown("lctrl") then
+        self.speed = 25
+    end
+    if not love.keyboard.isDown("lctrl") then
+        self.speed = 5
+    end
     self:getAnimation(self.direction)
     -- movementTimer = movementTimer + dt
     -- movementTimer = movementTimer - 2
@@ -64,6 +70,6 @@ end
 
 function localplayer:dig()
     local currentBlock = self.world:getBlockAt(self.x, self.y)
-    table.insert(self.items, currentBlock:getItem())
+    self:addItem(currentBlock:getItem())
     player.dig(self)
 end

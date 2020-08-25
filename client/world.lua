@@ -6,7 +6,7 @@ function world:init(width, height)
     o = {}
     o.width = width
     o.height = height
-    o.spawnPoint = {x = 400, y = 200}
+    o.spawnPoint = {x = 64, y = 64}
     setmetatable(o, self)
     self.__index = self
     return o
@@ -24,6 +24,7 @@ function world:generate(blocks)
             self.tileMap[i][j] = block_grass:new()
         end
     end
+    self.tileMap[2][2] = block_crafting_table:new()
     return world
 end
 
@@ -51,8 +52,8 @@ function world:getBlockAt(x, y)
 end
 
 function world:destroyBlockAt(x, y)
-    local blockX = math.ceil(x/32)
-    local blockY = math.ceil(y/32)
-    -- self.tileMap[blockX][blockY].sprite = block_grass:new():getSprite()
+    local blockX = math.ceil(x/64)
+    local blockY = math.ceil(y/64)
+    self.tileMap[blockX][blockY].sprite = sprites.items.pickaxe
 end
 

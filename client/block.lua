@@ -1,14 +1,11 @@
 block = {}
 
-local width = 32
-local height = 32
-
-function block:new(solid, spriteX, spriteY, hardness, item)
+function block:new(solid, blockSprite, hardness, item)
     o = {}
     o.solid = solid
     o.item = item
     o.hardness = hardness
-    o.sprite = getSprite(sprites.floor, spriteX*width, spriteY*height, width, height)
+    o.sprite = blockSprite
     setmetatable(o, self)
     self.__index = self
     return o
@@ -23,7 +20,6 @@ function block:getSprite()
 end
 
 function block:destroy()
-    self.sprite = water:getSprite()
 end
 
 function block:getItem()

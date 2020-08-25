@@ -7,7 +7,7 @@ networking = {}
 function networking:establish(entity)
     self.udp = socket.udp()
     self.udp:settimeout(0)
-    self.udp:setpeername("localhost", 25565)
+    self.udp:setpeername("cloud.mypenink.com", 25565)
 
     self.entity = entity
 

@@ -24,12 +24,23 @@ function hud:drawHealth()
     love.graphics.rectangle("fill", 16, 16, self.player:getHealth() * 16, 32)
 end
 
+
 function hud:drawItems()
+    local itemSpriteSize = 64
     local items = self.player:getItems()
+
     for i=1,table.getn(items) do
-        love.graphics.draw(sprites.items, items[i].sprite, i*20, love.graphics.getHeight() - 40)
+        love.graphics.draw(
+            sprites.images.items,
+            items[i].sprite,
+            i*itemSpriteSize,
+            love.graphics.getHeight() - itemSpriteSize - 20)
         if self.selected == i then
-            love.graphics.rectangle("line", i*20, love.graphics.getHeight() - 40, 16, 16)
+            love.graphics.rectangle("line",
+                i*itemSpriteSize,
+                love.graphics.getHeight() - itemSpriteSize - 20,
+                itemSpriteSize,
+                itemSpriteSize)
         end
     end
 end
