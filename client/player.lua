@@ -16,9 +16,6 @@ function player:init(entity, world)
     o.isDead = false
     o.entity = entity
     o.money = 1000
-    -- self:addItem(item_staff)
-    -- self:addItem(item_pickaxe)
-    -- self:addItem(item_arrow)
     setmetatable(o, self)
     self.__index = self
     table.insert(all_players, o)

@@ -25,7 +25,6 @@ function server:listen()
             local entity = request[1]
             local command = request[2]
             local response = commandhandler:handle(entity, command, request, msg_or_ip, port_or_nil)
-            print(data)
         end
     end
 end

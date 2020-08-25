@@ -26,7 +26,6 @@ function channel:getMembers()
 end
 
 function channel:sendtoAll(message)
-    print(table.getn(self.members))
     for i=1,table.getn(self.members) do
         local member = self.members[i]
         self.udp:sendto(message, member.ip, member.port)

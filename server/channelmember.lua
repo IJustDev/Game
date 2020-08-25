@@ -15,8 +15,6 @@ function channelmember:new(ip, port, entity)
 end
 
 function channelmember:updatePosition(x, y)
-    print(x)
-    print(y)
     self.x = x
     self.y = y
 end
