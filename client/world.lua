@@ -3,8 +3,17 @@ require "structure"
 world = {}
 
 function world:init(width, height)
-    self.width = width
-    self.height = height
+    o = {}
+    o.width = width
+    o.height = height
+    o.spawnPoint = {x = 400, y = 200}
+    setmetatable(o, self)
+    self.__index = self
+    return o
+end
+
+function world:getSpawnPoint()
+    return self.spawnPoint
 end
 
 function world:generate(blocks)

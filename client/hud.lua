@@ -35,7 +35,6 @@ function hud:drawItems()
 end
 
 function hud:drawMoney()
-    love.graphics.print("Money: "..self.player:getMoney(), 200, 200)
 end
 
 function hud:draw()

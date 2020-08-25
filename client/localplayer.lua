@@ -1,6 +1,10 @@
 localplayer = player:init()
 
 function localplayer:init(net, entity, world)
+    self.world = world
+    local spawnPoint = self.world:getSpawnPoint()
+    self.x = spawnPoint.x
+    self.y = spawnPoint.y
     self.net = net
     self.speed = 5
     return self

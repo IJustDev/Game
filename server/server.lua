@@ -3,6 +3,8 @@ require "utils"
 require "channel"
 require "channelmember"
 require "commandhandler"
+require "world"
+require "chunk"
 
 server = {}
 

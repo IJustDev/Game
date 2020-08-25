@@ -20,7 +20,8 @@ enemies = {}
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
-    local initializedWorld = world:generate({})
+    local initializedWorld = world:init(200, 200)
+    world:generate()
     math.randomseed(os.time())
     entityId = tostring(math.random(9999))
     map:init(initializedWorld)
@@ -32,14 +33,18 @@ function love.load()
 end
 
 function love.draw()
-    map:draw()
+    love.graphics.push()
+    love.graphics.translate(-gamePlayer.x+((love.graphics.getWidth()-50) / 2), -gamePlayer.y+((love.graphics.getHeight() - 90) / 2))
 
+    map:draw()
     entitymanager:draw()
 
     networkplayer:drawAll()
-    gamePlayer:draw()
-    hud:draw()
     projectile:drawAll()
+    gamePlayer:draw()
+
+    love.graphics.pop()
+    hud:draw()
 end
 
 function love.update(dt)

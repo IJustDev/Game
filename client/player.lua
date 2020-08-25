@@ -7,10 +7,10 @@ function player:init(entity, world)
     player.character_sprite = getSprite(sprites.character, 0, 0, 64, 96)
     o.x = 0
     o.y = 0
+    o.world = world
     o.speed = 3
     o.dir = "w"
     o.shoot_cooldown = 0
-    o.world = world
     o.items = {}
     o.health = 20
     o.isDead = false
@@ -64,7 +64,7 @@ end
 
 function player:shoot()
     if self.shoot_cooldown == 0 then
-        if self:hasItemInInventory("d:arrow") then
+        if not self:hasItemInInventory("d:arrow") then
             local bullet = projectile:new(self.x, self.y, self.direction, self)
             self.shoot_cooldown = 15
         end
