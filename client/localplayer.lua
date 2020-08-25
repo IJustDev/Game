@@ -15,26 +15,23 @@ function localplayer:update(dt)
     if love.keyboard.isDown("w") then
         self.direction = "w"
         self.y = self.y - self.speed
+        self.net:updatePosition(self.x, self.y)
     elseif love.keyboard.isDown("s") then
         self.direction = "s"
         self.y = self.y + self.speed
+        self.net:updatePosition(self.x, self.y)
     elseif love.keyboard.isDown("a") then
         self.direction = "a"
         self.x = self.x - self.speed
+        self.net:updatePosition(self.x, self.y)
     elseif love.keyboard.isDown("d") then
         self.direction = "d"
         self.x = self.x + self.speed
+        self.net:updatePosition(self.x, self.y)
     end
     self:getAnimation(self.direction)
-    movementTimer = movementTimer + dt
-    if movementTimer > 2 then
-        print("---")
-        print(self.x)
-        print(self.y)
-        print("---")
-        self.net:updatePosition(self.x, self.y)
-        movementTimer = movementTimer - 2
-    end
+    -- movementTimer = movementTimer + dt
+    -- movementTimer = movementTimer - 2
     if self.shoot_cooldown >= 1 then
         self.shoot_cooldown = self.shoot_cooldown - 1
     end

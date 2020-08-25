@@ -1,10 +1,10 @@
 local socket = require("socket")
 require "utils"
+require "channel"
+require "channelmember"
 require "commandhandler"
 
 server = {}
-
-local function istable(t) return type(t) == 'table' end
 
 function server:start()
     local address = "localhost"
@@ -13,10 +13,9 @@ function server:start()
     self.udp = socket.udp()
     self.udp:settimeout(timeout)
     self.udp:setsockname(address,port)
-
+    movement = channel:new("movement", self.udp)
 end
 
-players = {}
 
 function server:listen()
     while true do
@@ -25,20 +24,21 @@ function server:listen()
             local request = split(data)
             local entity = request[1]
             local command = request[2]
-            local response = commandhandler:handle(entity, command, request)
-            if istable(response) then
-                for i=1,table.getn(response) do
-                    print("Sending: ".. response[i].. "to entity: "..entity)
-                    self.udp:sendto(response[i], msg_or_ip, port_or_nil)
-                end
-            else
-                if response ~= nil then
-                    print("Sending: " .. response)
-                    self.udp:sendto(response, msg_or_ip, port_or_nil)
-                end
-            end
+            local response = commandhandler:handle(entity, command, request, msg_or_ip, port_or_nil)
+            print(data)
         end
     end
+end
+
+function server:sendMessage(message, ip, port)
+    self.udp:sendto(message, ip, port)
+end
+
+function server:answerInThread(message, ip, port)
+    local cp = coroutine.create(function()
+        self:sendMessage(message, ip, port)
+    end)
+    coroutine.resume(cp)
 end
 
 server:start()

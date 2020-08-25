@@ -11,6 +11,8 @@ function networking:establish(entity)
 
     self.entity = entity
 
+    self:sendMessage("J movement")
+
     return self
 end
 
@@ -43,11 +45,6 @@ end
 
 local fetchTimer = 0
 function networking:update(dt)
-    fetchTimer = fetchTimer + dt
-    if fetchTimer > 2 then
-        self:sendMessage("U")
-        fetchTimer = fetchTimer - 2
-    end
     self:handle()
 end
 

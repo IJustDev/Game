@@ -1,15 +1,17 @@
 movecommand = {}
 
-function movecommand:handle(entity, cmd, args)
-    local index = indexOfPlayer(entity)
-    if index ~= -1 then
-        players[index].x = args[3]
-        players[index].y = args[4]
+function movecommand:serializePlayer(player)
+    return string.format("M %s %d %d", player.entity, player.x, player.y)
+end
+
+function movecommand:handle(entity, cmd, args, ip, port)
+    local target = channelmember.getByEntityId(entity)
+    if target == nil then
+        target = channelmember:new(entity, ip, port)
+        movement:add(target)
+        target:updatePosition(args[3], args[4])
     else
-        newPlayer = {}
-        newPlayer.entity = entity
-        newPlayer.x = 0
-        newPlayer.y = 0
-        table.insert(players, newPlayer)
+        target:updatePosition(args[3], args[4])
     end
+    movement:sendtoAll(self:serializePlayer(target))
 end

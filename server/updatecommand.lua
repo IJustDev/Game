@@ -6,8 +6,5 @@ end
 
 function updatecommand:handle()
     messages = {}
-    for i=1, table.getn(players) do
-        table.insert(messages, self:serializePlayer(players[i]))
-    end
     return messages
 end

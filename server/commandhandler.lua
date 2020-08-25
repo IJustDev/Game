@@ -1,11 +1,11 @@
 require "logincommand"
 require "logoutcommand"
 require "movecommand"
-require "updatecommand"
+require "joincommand"
 
 commandhandler = {}
 
-function commandhandler:handle(entity, cmd, args)
+function commandhandler:handle(entity, cmd, args, ip, port)
     if cmd == "L" then
         return logincommand:handle(entity)
         -- login
@@ -14,10 +14,10 @@ function commandhandler:handle(entity, cmd, args)
         -- logout 
     elseif cmd == "M" then
         -- move
-        return movecommand:handle(entity, cmd, args)
-    elseif cmd == "U" then
-        -- update
-        return updatecommand:handle(entity, cmd, args)
+        return movecommand:handle(entity, cmd, args, ip, port)
+    elseif cmd == "J" then
+        return joincommand:handle(entity, cmd, args, ip, port)
     end
+
 end
 
