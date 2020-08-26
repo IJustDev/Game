@@ -79,7 +79,9 @@ function localplayer:draw()
 end
 
 function localplayer:dig()
-    local currentBlock = self.world:getBlockAt(self.x, self.y)
-    self:addItem(currentBlock:getItem())
-    player.dig(self)
+    local targetBlock = self.world:destroyBlockAt(self.x, self.y)
+    if targetBlock ~= nil then
+        self:addItem(targetBlock:getItem())
+        player.dig(self)
+    end
 end

@@ -65,8 +65,7 @@ function player:getItems()
 end
 
 function player:dig()
-    -- self.world:destroyBlockAt(self.x, self.y)
-
+    self.world:destroyBlockAt(self.x, self.y)
 end
 
 function player:interact()

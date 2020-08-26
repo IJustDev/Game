@@ -12,7 +12,6 @@ require "networkplayer"
 require "hud"
 require "block"
 require "objectregistry"
-require "map"
 require "world"
 require "enemy"
 
@@ -20,11 +19,10 @@ enemies = {}
 
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
-    local initializedWorld = world:init(200, 200)
-    world:generate()
+    initializedWorld = world:init(200, 200)
+    initializedWorld:generate()
     math.randomseed(os.time())
     entityId = tostring(math.random(9999))
-    map:init(initializedWorld)
 
     local net = networking
     net:establish(entityId)
@@ -35,8 +33,7 @@ end
 function love.draw()
     love.graphics.push()
     love.graphics.translate(-gamePlayer.x+((love.graphics.getWidth()-50) / 2), -gamePlayer.y+((love.graphics.getHeight() - 90) / 2))
-
-    map:draw()
+    initializedWorld:draw()
     entitymanager:draw()
 
     networkplayer:drawAll()

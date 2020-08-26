@@ -1,14 +1,20 @@
 block = {}
 
-function block:new(solid, blockSprite, hardness, item)
+function block:new(id, solid, blockSprite, hardness, item, replacement)
     o = {}
+    o.id = id
     o.solid = solid
     o.item = item
     o.hardness = hardness
     o.sprite = blockSprite
-    setmetatable(o, self)
+    o.replacement_block = replacement 
     self.__index = self
+    setmetatable(o, self)
     return o
+end
+
+function block:getId()
+    return self.id
 end
 
 function block:isSolid()
@@ -30,3 +36,12 @@ function block:getHardness()
     return self.harndess
 end
 
+-- After the player destroys a block like coal for example
+-- The stone block will be rendered.
+function block:getReplacementBlock()
+    return self.replacement_block
+end
+
+function block:isDiggable()
+    return self.hardness ~= -1
+end
