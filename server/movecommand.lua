@@ -22,8 +22,9 @@ function movecommand:handle(entity, cmd, args, ip, port)
 
     if target:leavesChunk(lastX, lastY) then
         local chunkX, chunkY = target:getChunk()
-        local c = gameWorld:getChunksNearby(chunkX, chunkY, 1)
-        print(c[1]:serialize(chunkX, chunkY))
-        movement:sendtoAll("MAP " ..c[1]:serialize(chunkX, chunkY))
+        local c = gameWorld:getChunksNearby(chunkX, chunkY, 2)
+        for i=1, table.getn(c) do
+            movement:sendtoAll("MAP " ..c[i]:serialize(c[i].x, c[i].y))
+        end
     end
 end

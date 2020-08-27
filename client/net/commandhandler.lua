@@ -24,7 +24,6 @@ function commandhandler:handle(cmd, params)
         end
         c:readNoise(serializedBlocks)
         c:parseToBlocks()
-        print(c.blocks)
     end
 
 end
