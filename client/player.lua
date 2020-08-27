@@ -131,3 +131,6 @@ function player:getNearbyPlayers(radius)
     return nearby
 end
 
+function player:getCurrentChunk()
+    return math.ceil(self.x / 64 / 16), math.ceil(self.y / 64 / 16)
+end

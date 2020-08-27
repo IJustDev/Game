@@ -17,10 +17,26 @@ end
 function channelmember:updatePosition(x, y)
     self.x = x
     self.y = y
+    local chunkX, chunkY = gameWorld:fromPlayerToChunkCoordinate(x ,y)
+    gameWorld:getChunksNearby(chunkX, chunkY, 3)
 end
 
 function channelmember:getPosition()
-    return {x=self.x, y=self.y}
+    return self.x, self.y
+end
+
+function channelmember:getChunk()
+    return math.ceil(self.x / 64 / 16), math.ceil(self.y / 64 / 16)
+end
+
+function channelmember:leavesChunk(lastX, lastY)
+    local lastChunkX, lastChunkY = world:fromPlayerToChunkCoordinate(lastX or 0, lastY or 0)
+    local chunkX, chunkY = world:fromPlayerToChunkCoordinate(self.x, self.y)
+    
+    if lastChunkX ~= chunkX or lastChunkY ~= chunkY then
+        return true
+    end
+    return false
 end
 
 function channelmember.getByIpAndPort(ip, port)

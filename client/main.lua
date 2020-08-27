@@ -1,6 +1,7 @@
 all_players = {}
 anim8 = require "anim8"
 require "utils"
+require "gamestate"
 require "net/networking"
 require "spritesheets"
 require "entitymanager"
@@ -12,20 +13,24 @@ require "networkplayer"
 require "hud"
 require "block"
 require "objectregistry"
+require "chunk"
 require "world"
 require "enemy"
 
 enemies = {}
 
+worldInitialized = false
+
 function love.load()
     love.graphics.setDefaultFilter("nearest", "nearest")
-    initializedWorld = world:init(200, 200)
-    initializedWorld:generate()
     math.randomseed(os.time())
     entityId = tostring(math.random(9999))
 
     local net = networking
     net:establish(entityId)
+
+    initializedWorld = world:init()
+
     gamePlayer = localplayer:init(net, entity, initializedWorld)
     hud:init(gamePlayer)
 end
@@ -33,7 +38,9 @@ end
 function love.draw()
     love.graphics.push()
     love.graphics.translate(-gamePlayer.x+((love.graphics.getWidth()-50) / 2), -gamePlayer.y+((love.graphics.getHeight() - 90) / 2))
-    initializedWorld:draw()
+    if worldInitialized then
+        initializedWorld:draw(gamePlayer)
+    end
     entitymanager:draw()
 
     networkplayer:drawAll()

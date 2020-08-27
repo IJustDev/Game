@@ -5,6 +5,7 @@ require "channelmember"
 require "commandhandler"
 require "world"
 require "chunk"
+require "world"
 
 server = {}
 
@@ -12,12 +13,15 @@ function server:start()
     local address = "localhost"
     local port = 25565
 
+    gameWorld = world:new()
+    gameWorld:initializeChunks()
+
     self.udp = socket.udp()
     self.udp:settimeout(timeout)
     self.udp:setsockname(address,port)
     movement = channel:new("movement", self.udp)
+    
 end
-
 
 function server:listen()
     while true do

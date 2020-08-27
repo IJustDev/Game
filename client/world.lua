@@ -1,12 +1,9 @@
-require "structure"
-
 world = {}
 
-function world:init(width, height)
+function world:init()
     o = {}
-    o.width = width
-    o.height = height
     o.spawnPoint = {x = 128, y = 128}
+    o.chunks = {}
     o.tileMap = {}
     self.__index = self
     setmetatable(o, self)
@@ -17,55 +14,43 @@ function world:getSpawnPoint()
     return self.spawnPoint
 end
 
-function world:generate()
-    self.tileMap = {}
-    for i=0,200 do
-        self.tileMap[i] = {}
-        for j=0,200 do
-            self.tileMap[i][j] = block_stone
-        end
-    end
-    self.tileMap[2][2] = block_ore_diamond
-    return world
-end
-
-function world:generateStructures()
-    local xRandom = math.random(20)
-    local yRandom = math.random(20)
-    local houseStruct = structure:generate()
-    for i=1,table.getn(houseStruct) do
-        for j=1,table.getn(houseStruct[i]) do
-            self.tileMap[i+yRandom][j+xRandom] = houseStruct[i][j]
-        end
-    end
-end
-
 function world:getTileMap()
     return self.tileMap
 end
 
-function world:getBlockAt(x, y)
-    local blockX = math.ceil(x/64)
-    local blockY = math.ceil(y/64)
-    return self.tileMap[blockX][blockY]
+function world:getChunkIndexWithPlayerCoords(x, y)
+    return x / 64 / 16, y / 64 / 16
 end
 
-function world:destroyBlockAt(x, y)
-    local targetBlock = self:getBlockAt(x, y)
-    if targetBlock ~= nil and targetBlock:isDiggable() then
-        self.tileMap[math.ceil(x/64)][math.ceil(y/64)] = targetBlock:getReplacementBlock()
-        return targetBlock
-    else
-        return nil
+function world:getChunkAt(chunkX, chunkY)
+    for i=1, table.getn(self.chunks) do
+        local c = self.chunks[i]
+        if c.x == chunkX and c.y == chunkY then
+            return c
+        end
     end
+    local c = chunk:new(chunkX, chunkY)
+    table.insert(self.chunks, c)
+    return c
+end
+
+function world:getBlockAt(x, y)
+    local chunkX, chunkY = self:getChunkIndexWithPlayerCoords(x, y)
+    return self:getChunkAt(chunkX, chunkY):getBlockAt(x, y)
 end
 
 function world:draw()
-    for x=0,150 do
-        for y=0,150 do
-            local b = self.tileMap[x][y]
-            if b ~= nil then
-                love.graphics.draw(sprites.images.tileset, b:getSprite(), x*64, y*64)
+    for chunkIndex=1, table.getn(self.chunks) do
+        local c = self.chunks[chunkIndex]
+        for x=1,16 do
+            for y=1,16 do
+                local b = c:getBlocks()[x][y]
+                    love.graphics.draw(
+                    sprites.images.tileset,
+                    b:getSprite(),
+                    c.x + x*64,
+                    c.y + y*64
+                    )
             end
         end
     end
