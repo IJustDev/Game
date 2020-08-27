@@ -34,6 +34,10 @@ function chunk:determineBlock(noiseValue)
         return block_stone
     elseif noiseValue < 0.1 then
         return block_ore_diamond
+    elseif noiseValue < 0.2 then
+        return block_ore_coal
+    elseif noiseValue < 0.25 then
+        return block_wood
     else
         return block_stone
     end

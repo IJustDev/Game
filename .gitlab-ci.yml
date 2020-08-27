@@ -9,8 +9,8 @@ zip_client:
         - apt install -y wget zip unzip
         - sh build.sh
     artifacts:
-        name: client
+        name: game
         paths:
             - client.zip
+            - server/
         expire_in: 4 days
-

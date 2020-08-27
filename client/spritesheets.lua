@@ -8,9 +8,9 @@ sprites.images.character = love.graphics.newImage("sprites/character.png")
 sprites.images.tileset = love.graphics.newImage("sprites/tileset.png")
 sprites.images.items = love.graphics.newImage("sprites/items.png")
 
-
 sprites.blocks = {}
 sprites.blocks.stone = getSprite(sprites.images.tileset, 0, 0, 64, 64)
+sprites.blocks.wood = getSprite(sprites.images.tileset, 0, 2, 64, 64)
 sprites.blocks.coal = getSprite(sprites.images.tileset, 2, 2, 64, 64)
 sprites.blocks.diamond = getSprite(sprites.images.tileset, 2, 0, 64, 64)
 
