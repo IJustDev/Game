@@ -16,6 +16,7 @@ require "objectregistry"
 require "chunk"
 require "world"
 require "enemy"
+require "gamestate"
 
 enemies = {}
 
@@ -29,6 +30,8 @@ function love.load()
     local net = networking
     net:establish(entityId)
 
+    gamestate:init()
+
     initializedWorld = world:init()
 
     gamePlayer = localplayer:init(net, entity, initializedWorld)
@@ -36,31 +39,17 @@ function love.load()
 end
 
 function love.draw()
-    love.graphics.push()
-    love.graphics.translate(-gamePlayer.x+((love.graphics.getWidth()-50) / 2), -gamePlayer.y+((love.graphics.getHeight() - 90) / 2))
-    if worldInitialized then
-        initializedWorld:draw(gamePlayer)
-    end
-    entitymanager:draw()
-
-    networkplayer:drawAll()
-    projectile:drawAll()
-    gamePlayer:draw()
-
-    love.graphics.pop()
-    hud:draw()
+    gamestate:draw()
 end
 
 function love.update(dt)
-    gamePlayer:update(dt)
-    entitymanager:update()
-    hud:update(gamePlayer)
-    networking:update(dt)
-    projectile:updateAll()
-    networkplayer:updateAll(dt)
+    gamestate:update(dt)
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    gamePlayer:keypressed(key, scancode, isrepeat)
-    hud:keypressed(key, scancode, isrepeat)
+    gamestate:keypressed(key, scancode, isrepeat)
+end
+
+function love.textinput(t)
+    gamestate:textinput(t)
 end

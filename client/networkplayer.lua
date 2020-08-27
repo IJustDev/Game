@@ -3,10 +3,13 @@ network_players = {}
 networkplayer = player:init()
 
 function networkplayer:init(entity, username)
-    self.entity = entity
-    self.username = username
-    table.insert(network_players, self)
-    return self
+    o = player:init(entity, world)
+    o.entity = entity
+    o.username = username
+    setmetatable(o, self)
+    self.__index = self
+    table.insert(network_players, o)
+    return o 
 end
 
 function networkplayer:draw()

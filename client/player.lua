@@ -2,14 +2,14 @@ all_players = {}
 
 player = {}
 
-function player:init(entity, world)
+function player:init(entity)
     o = {}
     player.character_sprite = getSprite(sprites.images.character, 0, 0, 64, 96)
     self.grid = anim8.newGrid(75, 103, sprites.images.character:getWidth(), sprites.images.character:getHeight())
     self.animation = anim8.newAnimation(self.grid('1-3', 1), 0.2)
     o.x = 0
     o.y = 0
-    o.world = world
+    o.world = nil
     o.speed = 3
     o.dir = "w"
     o.shoot_cooldown = 0

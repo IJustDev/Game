@@ -59,9 +59,6 @@ function localplayer:checkSprint()
 end
 
 function localplayer:keypressed(key, scancode, isrepeat)
-    if key == "escape" then
-        love.event.quit()
-    end
     if key == "space" then
         self:shoot()
     end
