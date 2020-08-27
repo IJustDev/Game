@@ -48,8 +48,8 @@ function world:draw()
                     love.graphics.draw(
                     sprites.images.tileset,
                     b:getSprite(),
-                    c.x + x*64,
-                    c.y + y*64
+                    c.x * 16*64 + x*64,
+                    c.y * 16*64 + y*64
                     )
             end
         end
