@@ -1,5 +1,22 @@
 stages:
+    - testing
     - build
+
+run_tests:
+    stage: testing
+    image: akorn/luarocks 
+    script:
+        - luarocks install busted
+        - cd server && busted
+
+deploy_server:
+    image: docker
+    services:
+        - docker:dind
+    script:
+        - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+        - docker build -t $IMAGE_WITH_TAG .
+        - docker push $IMAGE_WITH_TAG
 
 zip_client:
     stage: build
