@@ -61,5 +61,7 @@ deploy_server:
     only:
         refs:
             - master
+        changes:
+            - ./server/
 
 
