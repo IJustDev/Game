@@ -5,8 +5,8 @@ variables:
 
 stages:
     - test
-    - deploy
     - build
+    - deploy
 
 # run_tests:
 #     stage: test
@@ -40,7 +40,7 @@ zip_client:
         expire_in: 4 days
 
 deploy_server:
-    image: debian 
+    image: node:latest
     before_script:
         - 'which ssh-agent || ( apt-get install -qq openssh-client )'
         - eval $(ssh-agent -s)
