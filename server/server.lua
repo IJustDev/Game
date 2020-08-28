@@ -10,7 +10,7 @@ require "world"
 server = {}
 
 function server:start()
-    local address = "localhost"
+    local address = "0.0.0.0"
     local port = 25566
 
     gameWorld = world:new()
