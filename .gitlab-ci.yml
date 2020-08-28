@@ -1,7 +1,7 @@
 variables:
-  IMAGE_WITH_TAG: $CI_REGISTRY_IMAGE
+  IMAGE_WITH_TAG: "game:$CI_COMMIT_REF_NAME"
   EXPOSE_PORT: 25566
-  CONTAINER_NAME: "backend"
+  CONTAINER_NAME: "game"
 
 stages:
     - test
