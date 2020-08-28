@@ -1,5 +1,5 @@
 variables:
-  IMAGE_WITH_TAG: "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
+  IMAGE_WITH_TAG: $CI_REGISTRY_IMAGE
   EXPOSE_PORT: 25566
   CONTAINER_NAME: "game"
 
@@ -22,7 +22,7 @@ build_image:
         - docker:dind
     script:
         - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
-        - docker build -t $IMAGE_WITH_TAG .
+        - docker build -t $IMAGE_WITH_TAG server/
         - docker push $IMAGE_WITH_TAG
 
 zip_client:
