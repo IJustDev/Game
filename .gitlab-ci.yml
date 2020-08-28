@@ -56,7 +56,7 @@ deploy_server:
         - ssh root@cloud.mypenink.com "docker rm -f $CONTAINER_NAME || true"
         - ssh root@cloud.mypenink.com "docker rmi -f $IMAGE_WITH_TAG || true"
         - ssh root@cloud.mypenink.com "docker pull $IMAGE_WITH_TAG" 
-        - ssh root@cloud.mypenink.com "docker run -d --restart unless-stopped --name $CONTAINER_NAME -p $EXPOSE_PORT:25566" $IMAGE_WITH_TAG"
+        - ssh root@cloud.mypenink.com "docker run -d --restart unless-stopped --name $CONTAINER_NAME -p $EXPOSE_PORT:25566/udp" $IMAGE_WITH_TAG"
     dependencies: []
     only:
         refs:
