@@ -17,7 +17,7 @@ function chunk:generate(seed)
     for x=1,16 do
         self.blocks[x] = {}
         for y=1,16 do
-            self.blocks[x][y] = noise(x*scale * self.x + 3, y*scale * self.y + 3, 0)
+            self.blocks[x][y] = noise(x*scale * self.x, y*scale * self.y, 0)
         end
     end
 end

@@ -1,16 +1,23 @@
+variables:
+  IMAGE_WITH_TAG: $CI_REGISTRY_IMAGE
+  EXPOSE_PORT: 25566
+  CONTAINER_NAME: "backend"
+
 stages:
-    - testing
+    - test
+    - deploy
     - build
 
 run_tests:
-    stage: testing
+    stage: test
     image: akorn/luarocks 
     script:
         - luarocks install busted
         - cd server && busted
 
-deploy_server:
+build_image:
     image: docker
+    stage: build 
     services:
         - docker:dind
     script:
@@ -31,3 +38,28 @@ zip_client:
             - client.zip
             - server/
         expire_in: 4 days
+
+deploy_server:
+    image: debian 
+    before_script:
+        - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+        - eval $(ssh-agent -s)
+        - ssh-add <(echo "$SSH_PRIVATE_KEY")
+        - mkdir -p ~/.ssh
+        - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    stage: deploy 
+    environment:
+        name: dev 
+        url: cloud.mypenink.com
+    script:
+        - ssh root@cloud.mypenink.com "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+        - ssh root@cloud.mypenink.com "docker rm -f $CONTAINER_NAME || true"
+        - ssh root@cloud.mypenink.com "docker rmi -f $IMAGE_WITH_TAG || true"
+        - ssh root@cloud.mypenink.com "docker pull $IMAGE_WITH_TAG" 
+        - ssh root@cloud.mypenink.com "docker run -d --restart unless-stopped --name $CONTAINER_NAME -p $EXPOSE_PORT:25566" $IMAGE_WITH_TAG"
+    dependencies: ['build_image']
+    only:
+        refs:
+            - master
+
+
