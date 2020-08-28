@@ -10,7 +10,7 @@ stages:
 
 run_tests:
     stage: test
-    image: akorn/luarocks 
+    image: akorn/luarocks:lua5.1-alpine
     script:
         - luarocks install busted
         - cd server && busted
